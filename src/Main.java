@@ -1,3 +1,5 @@
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Scanner;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -6,8 +8,8 @@ import java.io.IOException;
 public class Main {
     static Scanner input = new Scanner(System.in);
     static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-    static String[][] beasiswa = new String[10][11];
-    static String[][] regular = new String[10][10];
+    static String[][] beasiswa = new String[0][11];
+    static String[][] regular = new String[0][10];
     static String biaya = "Rp. 1.500.000,00";
 
     public static void judul(String a) {
@@ -17,91 +19,97 @@ public class Main {
     }
 
     public static void insertRegular(String[][] array, String nama) {
+        String[][] temp = array;
+        array = new String[temp.length + 1][10];
+        String[] temp2 = new String[10];
+        for (int i = 0; i < temp.length; i++) {
+            System.arraycopy(temp[i], 0, array[i], 0, temp[i].length);
+        }
         boolean c = true;
         try {
-            do {
-                int i = 0;
-                if (array[i][0] != null) {
-                    i++;
-                }
-                if (array[i][0] == null) {
-                    for (int j = 0; j < array[i].length; j++) {
-                        if (j == 0) {
-                            array[i][0] = nodaftar(regular, nama);
-                        } else if (j == 1) {
-                            System.out.print("NIK\t\t\t:");
-                            array[i][1] = in.readLine();
-                        } else if (j == 2) {
-                            System.out.print("Nama\t\t\t:");
-                            array[i][2] = in.readLine();
-                        } else if (j == 3) {
-                            System.out.print("Jenis Kelamin(P/L)\t:");
-                            array[i][3] = in.readLine().toUpperCase();
-                        } else if (j == 4) {
-                            System.out.print("Agama\t\t\t:");
-                            array[i][4] = in.readLine();
-                        } else if (j == 5) {
-                            System.out.print("NISN\t\t\t:");
-                            array[i][5] = in.readLine();
-                        } else if (j == 6) {
-                            System.out.print("Alamat\t\t\t:");
-                            array[i][6] = in.readLine();
-                            judul("Inputkan Nilai UTBK");
-                            System.out.println("No Daftar\t\t: " + array[i][0]);
-                            System.out.println("Nama\t\t\t: " + array[i][2]);
-                        } else if (j == 7) {
-                            System.out.print("Nilai Tes UTBK\t\t: ");
-                            array[i][7] = in.readLine();
-                        }
-                        if (array[i][7] != null) {
-                            int a = Integer.parseInt(array[i][7]);
-                            if (a >= 500) {
-                                array[i][8] = "LULUS";
 
-                                if (j == 8) {
-                                    judul("Selamat anda lulus!");
-                                    System.out.println("Biaya Daftar ulang: " + biaya);
-                                    System.out.print("Daftar Ulang (Y/T)?:");
-                                    String du = in.readLine().toUpperCase();
-                                    if (du.equals("Y")) {
-                                        System.out.println("Pilih Prodi:");
-                                        System.out.println("1. Sistem Informasi");
-                                        System.out.println("2. T. Informatika");
-                                        System.out.println("3. Manajen");
-                                        System.out.println("4. Teknik Komputer");
-                                        System.out.print("Pilih: ");
-                                        int pil = input.nextInt();
-                                        switch (pil) {
-                                            case 1:
-                                                array[i][9] = "Sistem Informasi";
-                                                break;
-                                            case 2:
-                                                array[i][9] = "T. Informatika";
-                                                break;
-                                            case 3:
-                                                array[i][9] = "Manajemen";
-                                                break;
-                                            case 4:
-                                                array[i][9] = "Teknik Komputer";
-                                                break;
-                                            default:
-                                                System.out.println("Opsi salah");
-                                                break;
-                                        }
-                                    } else {
-                                        System.out.println("Mohon maaf anda tidak melakukan daftar ulang");
-                                        c = false;
-                                    }
-                                }
-                            } else if (a < 500) {
-                                array[i][8] = "TIDAK LULUS";
-                                System.out.println("Mohon Maaf anda tidak lulus");
+            for (int j = 0; j < temp2.length; j++) {
+                if (j == 0) {
+                    temp2[0] = nodaftar(regular, nama);
+                } else if (j == 1) {
+                    System.out.print("NIK\t\t\t:");
+                    temp2[1] = in.readLine();
+                } else if (j == 2) {
+                    System.out.print("Nama\t\t\t:");
+                    temp2[2] = in.readLine();
+                } else if (j == 3) {
+                    System.out.print("Jenis Kelamin(P/L)\t:");
+                    temp2[3] = in.readLine().toUpperCase();
+                } else if (j == 4) {
+                    System.out.print("Agama\t\t\t:");
+                    temp2[4] = in.readLine();
+                } else if (j == 5) {
+                    System.out.print("NISN\t\t\t:");
+                    temp2[5] = in.readLine();
+                } else if (j == 6) {
+                    System.out.print("Alamat\t\t\t:");
+                    temp2[6] = in.readLine();
+                    judul("Inputkan Nilai UTBK");
+                    System.out.println("No Daftar\t\t: " + temp2[0]);
+                    System.out.println("Nama\t\t\t: " + temp2[2]);
+                } else if (j == 7) {
+                    System.out.print("Nilai Tes UTBK\t\t: ");
+                    temp2[7] = in.readLine();
+                }
+                if (temp2[7] != null) {
+                    int a = Integer.parseInt(temp2[7]);
+                    if (a >= 500) {
+                        temp2[8] = "LULUS";
+                        if (j == 8) {
+                            judul("Selamat anda lulus!");
+                            System.out.println("Biaya Daftar ulang: " + biaya);
+                            System.out.print("Daftar Ulang (Y/T)?:");
+                            String du = in.readLine().toUpperCase();
+                            if (du.equals("T")) {
+                                System.out.println("Terima kasih sudah mendaftar");
+                                System.out.println("Mohon maaf anda tidak melakukan daftar ulang");
+                                c = false;
                             }
                         }
+                    } else if (a < 500) {
+                        temp2[8] = "TIDAK LULUS";
+                        System.out.println("Mohon Maaf anda tidak lulus");
+                        c = false;
+                    }
+
+                }
+                if (c) {
+                    System.out.println("Pilih Prodi:");
+                    System.out.println("1. Sistem Informasi");
+                    System.out.println("2. T. Informatika");
+                    System.out.println("3. Manajen");
+                    System.out.println("4. Teknik Komputer");
+                    System.out.print("Pilih: ");
+                    int pil = input.nextInt();
+                    switch (pil) {
+                        case 1:
+                            array[temp.length][9] = "Sistem Informasi";
+                            break;
+                        case 2:
+                            array[temp.length][9] = "T. Informatika";
+                            break;
+                        case 3:
+                            array[temp.length][9] = "Manajemen";
+                            break;
+                        case 4:
+                            array[temp.length][9] = "Teknik Komputer";
+                            break;
+                        default:
+                            System.out.println("Opsi salah");
+                            break;
+                    }
+                    for (int i = 0; i < temp.length; i++) {
+                        array[temp.length][i] = temp2[i];
                     }
                 }
-                c = false;
-            } while (c);
+            }
+
+
         } catch (IOException e) {
             System.out.println(e);
         }
@@ -196,8 +204,7 @@ public class Main {
 
     public static void tampilBeasiswa(String[][] array) {
         judul("Pendaftar Beasiswa");
-        System.out.println(
-                "NoDaftar\tNIK\t\tNama\t\tJK\tAgama\tNISN\tAlamat\tTes Tulis\tTes Wawancara\tStatus\tJurusan");
+        System.out.println("NoDaftar\tNIK\t\tNama\t\tJK\tAgama\tNISN\tAlamat\tTes Tulis\tTes Wawancara\tStatus\tJurusan");
         for (int i = 0; i < array.length; i++) {
             for (int j = 0; j < array[i].length; j++) {
                 if (array[i][j] != null) {
@@ -306,36 +313,35 @@ public class Main {
                     insertRegular(regular, "RGL");
                     break;
                 case 2:
-                    if (beasiswa[1][0] != null) {
-                        System.out.println("NoDaftar\tNIK\tNama\tJK\tAgama\tNISN\tAlamat\tNilai UTBK\tStatus\tJurusan");
-                        System.out.println("Urutkan Berdasar!");
-                        System.out.println("1. No Daftar");
-                        System.out.println("2. Nama");
-                        System.out.println("3. NIK");
-                        System.out.println("4. Nisn");
-                        System.out.println("5. Nilai UTBK");
-                        System.out.print("Pilih(1-5): ");
-                        int a = input.nextInt();
-                        switch (a) {
-                            case 1:
-                                urutkan(beasiswa, 0);
-                                break;
-                            case 2:
-                                urutkan(beasiswa, 2);
-                                break;
-                            case 3:
-                                urutkan(beasiswa, 1);
-                                break;
-                            case 4:
-                                urutkan(beasiswa, 5);
-                                break;
-                            case 5:
-                                urutkan(beasiswa, 7);
-                                break;
-                            default:
-                                System.out.println("Opsi tidak ada");
-                        }
+                    System.out.println("NoDaftar\tNIK\tNama\tJK\tAgama\tNISN\tAlamat\tNilai UTBK\tStatus\tJurusan");
+                    System.out.println("Urutkan Berdasar!");
+                    System.out.println("1. No Daftar");
+                    System.out.println("2. Nama");
+                    System.out.println("3. NIK");
+                    System.out.println("4. Nisn");
+                    System.out.println("5. Nilai UTBK");
+                    System.out.print("Pilih(1-5): ");
+                    int a = input.nextInt();
+                    switch (a) {
+                        case 1:
+                            urutkan(regular, 0);
+                            break;
+                        case 2:
+                            urutkan(regular, 2);
+                            break;
+                        case 3:
+                            urutkan(regular, 1);
+                            break;
+                        case 4:
+                            urutkan(regular, 5);
+                            break;
+                        case 5:
+                            urutkan(regular, 7);
+                            break;
+                        default:
+                            System.out.println("Opsi tidak ada");
                     }
+
                     tampilRegular(regular);
                     break;
                 case 0:
@@ -350,38 +356,30 @@ public class Main {
 
     public static String nodaftar(String[][] arr, String a) {
         String re = "";
-        for (int i = 0; i < 10; i++) {
-            if (arr[i][0] == null) {
-                re = a + String.format("%04d", (i + 1));
-                break;
-            }
-            if (!arr[i][0].equals(a + String.format("%04d", i))) {
-                re = a + String.format("%04d", (i));
+        if (arr.length == 0) {
+            re = a + "0001";
+        } else {
+            for (int i = 0; i < 10; i++) {
+                if (arr[i][0] == null) {
+                    re = a + String.format("%04d", (i + 1));
+                    break;
+                }
+                if (!arr[i][0].equals(a + String.format("%04d", i))) {
+                    re = a + String.format("%04d", (i));
+                }
             }
         }
         return re;
     }
 
     public static String[][] urutkan(String[][] array, int colmn) {
-        int flag, h = 0;
-        String[] temp = new String[3];
-        for (int k = 0; k < array.length; k++) {
-            if (array[k][0] != null) {
-                h++;
+        Arrays.sort(array, new Comparator<String[]>() {
+            public int compare(String[] a, String[] b) {
+                if (a[colmn].compareTo(b[colmn]) > 0) {
+                    return 1;
+                } else return -1;
             }
-        }
-        for (int i = 0; i < h; i++) {
-            flag = i;
-            for (int j = i + 1; j < h; j++) {
-                if (array[j][colmn].compareTo(array[flag][colmn]) < 0)
-                    flag = j;
-            }
-            if (flag != 1) {
-                System.arraycopy(array[i], 0, temp, 0, temp.length);
-                System.arraycopy(array[flag], 0, array[i], 0, temp.length);
-                System.arraycopy(temp, 0, array[flag], 0, temp.length);
-            }
-        }
+        });
         return array;
     }
 
