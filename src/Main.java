@@ -18,7 +18,7 @@ public class Main {
         System.out.println("==========================================");
     }
 
-    public static void insertRegular(String[][] array, String nama) {
+    public static String[][] insertRegular(String[][] array, String nama) {
         String[][] temp = array;
         array = new String[temp.length + 1][10];
         String[] temp2 = new String[10];
@@ -27,7 +27,6 @@ public class Main {
         }
         boolean c = true;
         try {
-
             for (int j = 0; j < temp2.length; j++) {
                 if (j == 0) {
                     temp2[0] = nodaftar(regular, nama);
@@ -60,25 +59,27 @@ public class Main {
                     int a = Integer.parseInt(temp2[7]);
                     if (a >= 500) {
                         temp2[8] = "LULUS";
-                        if (j == 8) {
-                            judul("Selamat anda lulus!");
-                            System.out.println("Biaya Daftar ulang: " + biaya);
-                            System.out.print("Daftar Ulang (Y/T)?:");
-                            String du = in.readLine().toUpperCase();
-                            if (du.equals("T")) {
-                                System.out.println("Terima kasih sudah mendaftar");
-                                System.out.println("Mohon maaf anda tidak melakukan daftar ulang");
-                                c = false;
-                            }
-                        }
-                    } else if (a < 500) {
+                    } else {
                         temp2[8] = "TIDAK LULUS";
                         System.out.println("Mohon Maaf anda tidak lulus");
                         c = false;
                     }
+                }
+                if(j==8){
+                    judul("Selamat anda lulus!");
+                    System.out.println("Biaya Daftar ulang: " + biaya);
+                    System.out.print("Daftar Ulang (Y/T)?:");
+                    String du = in.readLine().toUpperCase();
+                    if (du.equals("T")) {
+                        System.out.println("Terima kasih sudah mendaftar");
+                        System.out.println("Mohon maaf anda tidak melakukan daftar ulang");
+                        c = false;
+                    }else if(du.equals("Y")){
+                        System.out.println("Terima kasih sudah melakukan daftar ulang");
+                    }
 
                 }
-                if (c) {
+                if (j==9) {
                     System.out.println("Pilih Prodi:");
                     System.out.println("1. Sistem Informasi");
                     System.out.println("2. T. Informatika");
@@ -103,16 +104,22 @@ public class Main {
                             System.out.println("Opsi salah");
                             break;
                     }
-                    for (int i = 0; i < temp.length; i++) {
-                        array[temp.length][i] = temp2[i];
+                    if (c) {
+
+                        for (int i = 0; i < temp2.length; i++) {
+                            array[temp.length][j] = temp2[i];
+                        }
                     }
                 }
+
+
             }
 
 
         } catch (IOException e) {
             System.out.println(e);
         }
+        return array;
     }
 
     public static void insertBeasiswa(String[][] array) {
@@ -310,7 +317,7 @@ public class Main {
             switch (pil) {
                 case 1:
                     System.out.println("Masukkan Data Pendaftar!!");
-                    insertRegular(regular, "RGL");
+                    regular = insertRegular(regular, "RGL");
                     break;
                 case 2:
                     System.out.println("NoDaftar\tNIK\tNama\tJK\tAgama\tNISN\tAlamat\tNilai UTBK\tStatus\tJurusan");
@@ -324,19 +331,19 @@ public class Main {
                     int a = input.nextInt();
                     switch (a) {
                         case 1:
-                            urutkan(regular, 0);
+                            regular = urutkan(regular, 0);
                             break;
                         case 2:
-                            urutkan(regular, 2);
+                            regular = urutkan(regular, 2);
                             break;
                         case 3:
-                            urutkan(regular, 1);
+                            regular = urutkan(regular, 1);
                             break;
                         case 4:
-                            urutkan(regular, 5);
+                            regular = urutkan(regular, 5);
                             break;
                         case 5:
-                            urutkan(regular, 7);
+                            regular = urutkan(regular, 7);
                             break;
                         default:
                             System.out.println("Opsi tidak ada");
